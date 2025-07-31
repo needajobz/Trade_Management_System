@@ -1,4 +1,4 @@
-package com.myapp.desk.respository;
+package com.myapp.desk.repository;
 
 import com.myapp.desk.domain.Instrument;
 import org.springframework.data.jpa.repository.JpaRepository;

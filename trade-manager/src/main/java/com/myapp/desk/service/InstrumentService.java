@@ -1,6 +1,6 @@
 package com.myapp.desk.service;
 
-import com.myapp.desk.domain.Instrument
+import com.myapp.desk.domain.Instrument;
 
 import java.util.List;
 import java.util.Optional;

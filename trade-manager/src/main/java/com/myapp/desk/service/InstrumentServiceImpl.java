@@ -1,7 +1,8 @@
 package com.myapp.desk.service;
 
 import com.myapp.desk.domain.Instrument;
-import com.myapp.desk.respository.InstrumentRepository;
+import com.myapp.desk.repository.InstrumentRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class InstrumentServiceImpl implements InstrumentService {
                     // Update fields as needed (update with actual Instrument fields)
                     existingInstrument.setSymbol(instrument.getSymbol());
                     existingInstrument.setIsin(instrument.getIsin());
-                    existingInstrument.setType(instrument.getType());
+                    existingInstrument.setName(instrument.getName());
                     existingInstrument.setId(instrument.getId());
                     // ...add other Instrument fields as needed...
                     return instrumentRepository.save(existingInstrument);
@@ -56,3 +57,4 @@ public class InstrumentServiceImpl implements InstrumentService {
         instrumentOptional.ifPresent(instrumentRepository::delete);
         return instrumentOptional;
     }
+}

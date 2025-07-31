@@ -1,6 +1,6 @@
 package com.myapp.desk.service;
 
-import com.myapp.desk.domain.Trade
+import com.myapp.desk.domain.Trade;
 
 import java.util.List;
 import java.util.Optional;

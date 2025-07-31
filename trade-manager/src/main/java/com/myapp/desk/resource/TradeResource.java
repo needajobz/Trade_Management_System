@@ -1,11 +1,11 @@
 package com.myapp.desk.resource;
 
-import com.myapp.desk.domain.Ticket;
-import com.myapp.desk.service.TicketService;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
+import com.myapp.desk.service.TradeService;
+import com.myapp.desk.domain.Trade;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class TradeResource {
 
     @PostMapping
     public ResponseEntity<Trade> createTrade(@RequestBody Trade trade) {
-        trade = tradeService.createTicket(trade);
+        trade = tradeService.createTrade(trade);
         return new ResponseEntity<>(trade, HttpStatus.OK);
     }
 
@@ -42,8 +42,9 @@ public class TradeResource {
         return ResponseEntity.ok(updatedTrade);
     }
     @GetMapping("/{id}")
-    public Ticket getTradeById(@PathVariable Long id) {
-        return tradeService.getTradeById(id).get();
+    public ResponseEntity<Trade> getTradeById(@PathVariable Long id) {
+        Optional<Trade> trade = tradeService.getTradeById(id);
+        return trade.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping

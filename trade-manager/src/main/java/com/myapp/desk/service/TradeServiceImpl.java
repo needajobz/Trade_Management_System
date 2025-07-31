@@ -1,19 +1,18 @@
  package com.myapp.desk.service;
 
-import com.myapp.desk.domain.Status;
-import com.myapp.desk.respository.AgentRepository;
-import com.myapp.desk.respository.TicketRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
+import com.myapp.desk.domain.Trade;
+import com.myapp.desk.repository.TradeRepository;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class TradeServiceImpl implements TradeService {
 
-    private TradeRepository tradeRepository;
+    private final TradeRepository tradeRepository;
     public TradeServiceImpl(TradeRepository tradeRepository) {
         this.tradeRepository = tradeRepository;
 
@@ -30,9 +29,10 @@ public class TradeServiceImpl implements TradeService {
         return tradeRepository.findById(tradeId)
                 .map(existingTrade -> {
                     // Update fields as needed
+                    existingTrade.setId(trade.getId());
                     existingTrade.setPrice(trade.getPrice());
                     existingTrade.setQuantity(trade.getQuantity());
-                    existingTrade.setInstrumentSymbol(trade.getInstrumentSymbol());
+                    existingTrade.setInstrument(trade.getInstrument());
                     existingTrade.setTradeDate(trade.getTradeDate());
                     existingTrade.setSourceSystem(trade.getSourceSystem());
                     existingTrade.setTradeId(trade.getTradeId());

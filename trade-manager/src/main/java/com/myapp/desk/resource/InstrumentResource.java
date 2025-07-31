@@ -2,10 +2,11 @@ package com.myapp.desk.resource;
 
 import com.myapp.desk.domain.Instrument;
 import com.myapp.desk.service.InstrumentService;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @RequestMapping("instruments")
 public class InstrumentResource {
 
-    private InstrumentService instrumentService;
+    private final InstrumentService instrumentService;
 
     public InstrumentResource(InstrumentService instrumentService) {
         this.instrumentService = instrumentService;
@@ -39,11 +40,14 @@ public class InstrumentResource {
 //    }
 
     @GetMapping("/{id}")
-    public Instrument getInstrumentById(@PathVariable long id) {return tradeService.getInstrumentById(id).get();
+    public ResponseEntity<Instrument> getInstrumentById(@PathVariable long id) {
+        Optional<Instrument> instrument = instrumentService.getInstrumentById(id);
+        return instrument.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/{id}")
-    public Instrument deleteInstrument(@PathVariable long id) {
-        instrumentService.
+    public ResponseEntity<Instrument> deleteInstrument(@PathVariable long id) {
+        Optional<Instrument> deleted = instrumentService.deleteInstrument(id);
+        return deleted.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

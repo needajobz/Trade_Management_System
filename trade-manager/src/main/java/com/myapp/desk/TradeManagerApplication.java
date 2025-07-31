@@ -2,9 +2,6 @@ package com.myapp.desk;
 
 import com.myapp.desk.domain.Agent;
 import com.myapp.desk.domain.Ticket;
-import com.myapp.desk.respository.AgentRepository;
-import com.myapp.desk.respository.TicketRepository;
-import com.myapp.desk.service.TicketService;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
